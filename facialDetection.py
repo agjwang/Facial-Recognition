@@ -1,18 +1,24 @@
 import numpy as nump
 import cv2
-variable = cv2.CascadeClassifier('lbpcascade_animeface.xml')
-print 'here'
 
-img = cv2.imread('lelouch.jpg')
+def classifyFaces(str):
+    face_cascade = cv2.CascadeClassifier('lbpcascade_animeface.xml')
+    img = cv2.imread(str)
 
-grey = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-face_detect = variable.detectMultiScale(grey, 1.3, 5)
+    grey = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-for(x, y, w, h) in face_detect:
-    cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2)
-    roi_gray = grey[y : y + h, x : x + w]
-    roi_color = img[y : y + h, x : x + w]
+    faces_info = list()
+    faces = face_cascade.detectMultiScale(grey, 1.01, 5)
+    for (x, y, w, h) in faces:
+        face_info = dict()
+        face_info['x'] = x
+        face_info['y'] = y
+        face_info['w'] = w
+        face_info['h'] = h
+        faces_info.append(face_info)
 
-cv2.imshow('img', img)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+    return faces_info
+
+#print(classifyFaces('lelouch.jpg'))
+#classifyFaces('idolmaster.jpg')
+#classifyFaces('fma.jpg')
