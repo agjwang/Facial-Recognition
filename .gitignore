@@ -1,0 +1,52 @@
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# VIM: Temporary files
+*~
+
+# VIM: Swap-files
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+
+# VIM: Commands :cs, :ctags
+tags
+cscope.*
+
+# IDE created project files
+*.iml
+
+# VIM session
+Session.vim
+
+# VIM: netrw.vim: Network oriented reading, writing, browsing (eg: ftp scp) 
+.netrwhist
