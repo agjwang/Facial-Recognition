@@ -36,6 +36,7 @@
 
 # IDE created project files
 *.iml
+*.idea
 
 # VIM: Swap-files
 [._]*.s[a-w][a-z]
