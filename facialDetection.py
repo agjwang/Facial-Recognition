@@ -1,4 +1,3 @@
-import numpy as nump
 import cv2
 
 def classifyFaces(str):
