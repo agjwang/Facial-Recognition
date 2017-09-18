@@ -1,0 +1,28 @@
+HTML
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <script src="jquery-3.2.1.min.js"></script>
+  <title>Facial Recognition</title>
+  <meta name="description" content="Disruptive.">
+</head>
+
+<body>
+  <label for="query">What phrase would you like to search?<br />
+    <input id="query" name="query"></input></label><br />
+  <button onclick="queryGoogle()">Submit</button>
+</body>
+</html>
+
+JavaScript
+
+function queryGoogle() {
+  var query = document.getElementById("query").value;
+  var xhttp = new XMLHttpRequest();
+  xhttp.open("POST", "getImages.py", true);
+  xhttp.onreadystatechange = function() {
+    var img = document.getElementById("images").innerHtml = xhttp.responseText;
+  };
+  xhttp.send("query=" + query);
+}
