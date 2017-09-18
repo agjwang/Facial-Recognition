@@ -25,25 +25,20 @@ def searchImages(query):
 		print err
 		return None
 
-def getFirst3ImagesFromGoogle(query):
+def getFirstXImagesFromGoogle(query, numImages):
 	result = searchImages(query)
 	if result == None:
 		print 'Search failed.'
 		return
 	soup = BeautifulSoup(result)
 	images = soup.find_all('img')
-	for i in range(0, 3):
+	imageArray = []
+	for i in range(0, numImages):
 		parent = images[i].parent
 		src = parent['href']
 		encodedUrl = src[src.find('?imgurl=') + len('?imgurl='):src.find('&imgrefurl')]
 		partiallyDecodedUrl = urllib2.unquote(encodedUrl).decode('utf8')
 		imageSrc = HTMLParser.HTMLParser().unescape(partiallyDecodedUrl).encode(sys.getfilesystemencoding())
-		imageName = str(i) + '.jpg' #will add better naming later
-		try:
-			download(imageSrc, imageName)
-		except urllib.error.ContentTooShortError as e: 
-			print e, imageName
-		time.sleep(10)
-
-getFirst3ImagesFromGoogle('Naruto')
+		imageArray.append(imageSrc)
+	return imageArray
 
