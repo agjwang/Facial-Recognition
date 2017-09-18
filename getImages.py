@@ -40,5 +40,7 @@ def getFirstXImagesFromGoogle(query, numImages):
 		partiallyDecodedUrl = urllib2.unquote(encodedUrl).decode('utf8')
 		imageSrc = HTMLParser.HTMLParser().unescape(partiallyDecodedUrl).encode(sys.getfilesystemencoding())
 		imageArray.append(imageSrc)
+		if numImages == 1:
+			return imageArra #using for test of sitey
 	return imageArray
 
