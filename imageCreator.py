@@ -52,4 +52,4 @@ def repositionOverlay(overlay_path, face_data):
 
     return face_data
 
-overlayImage('idolmaster.jpg', 'cat_ears.png', 'new.jpg')
+overlayImage('lelouch.jpg', 'cat_ears.png', 'new.jpg')
