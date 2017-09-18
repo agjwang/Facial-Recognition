@@ -16,6 +16,7 @@ def classifyFaces(str):
         face_info['h'] = h
         faces_info.append(face_info)
 
+    cv2.imwrite('new.jpg', img)
     return faces_info
 
 #print(classifyFaces('lelouch.jpg'))
