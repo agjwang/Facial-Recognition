@@ -1,6 +1,9 @@
 from bs4 import BeautifulSoup
+from selenium import webdriver
 import requests
 import urllib
+import urllib2
+import HTMLParser
 import time
 import sys
 
@@ -14,31 +17,30 @@ def progressReporter(blockNum, blockSize, totalSize):
 
 def searchImages(query):
 	try:
-		result = requests.get('https://www.google.ca/search?q=' + query.replace(' ', '+') + '&tbm=isch')
-		result.raise_for_status()
-		return result.content
-      	except requests.exceptions.HTTPError as err:
-		print err.response.status_code
+		driver = webdriver.Firefox()
+		result = driver.get('https://www.google.ca/search?q=' + query.replace(' ', '+') + '&tbm=isch') #need selenium to get decrypted urls for the parent links
+		result = driver.find_element_by_id('ires').get_attribute('innerHTML') #expecting this id to be present in all google results, has been in 10+ so far
+		return result
+      	except Exception as err: #cannot find selenium's HTTPError; this is better than nothing
+		print err
 		return None
 
-def getFirst3ImagesFromGoogle(query):
+def getFirstXImagesFromGoogle(query, numImages):
 	result = searchImages(query)
 	if result == None:
 		print 'Search failed.'
 		return
 	soup = BeautifulSoup(result)
-	with open('result.txt','w') as f:
-		f.write(str(soup))
-	imageDiv = soup.find('div', {'id':'ires'}) #expecting this id to be present in all google results
-	images = imageDiv.find_all('img')
-	for i in range(0, 3):
-		imageSrc = images[i]['src']
-		imageName = str(i) + '.jpg'
-		try:
-			download(imageSrc, imageName)
-		except Exception as e:
-			print Exception
-		time.sleep(10)
-
-getFirst3ImagesFromGoogle('Naruto')
+	images = soup.find_all('img')
+	imageArray = []
+	for i in range(0, numImages):
+		parent = images[i].parent
+		src = parent['href']
+		encodedUrl = src[src.find('?imgurl=') + len('?imgurl='):src.find('&imgrefurl')]
+		partiallyDecodedUrl = urllib2.unquote(encodedUrl).decode('utf8')
+		imageSrc = HTMLParser.HTMLParser().unescape(partiallyDecodedUrl).encode(sys.getfilesystemencoding())
+		imageArray.append(imageSrc)
+		if numImages == 1:
+			return imageArra #using for test of sitey
+	return imageArray
 
